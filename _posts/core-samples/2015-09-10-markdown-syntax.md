@@ -3,7 +3,7 @@ layout: post
 title: "Jekyll markdown syntax"
 tagline: ""
 description: "Jekyll markdown syntax"
-category: Jekyll
+category: jekyll
 tags: [intro, beginner, jekyll, tutorial]
 last_updated: 2015-09-10
 ---
