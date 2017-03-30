@@ -1,22 +1,5 @@
 Personal website using Jekyll-Bootstrap  
-http://einverne.github.io
+http://zoujiemeng.github.io
 
-写给我自己：
+这是一个托管在Github Page上面的个人博客，主题使用的是[Ein Verne](https://github.com/einverne)于github上发布的开源主题，非常棒，感谢大神，赞美太阳！对于程序员来说，写作也是一个非常重要的能力。目前博客内容很少，因此我会专注于写作。后面如果有时间的话我会学习一下前端的知识，修改一下博客外观，第一件想干的事是把背景改成米色的……
 
-1. 新建Post，Title可为中文，自动转变成拼音
-
-		rake post title="A Title" [date="2012-02-09"] [tags=[tag1,tag2]] [category="category"]
-
-2. 新建页面
-
-		rake page name="about.html"
-
-3. 运行Jekyll
-
-	目录下运行`bundle exec jekyll serve -w`，本地浏览地址：http://localhost:4000
-
-下面是之前网上找到的JS图片轮播demo
-
-1. http://einverne.github.io/ImageSlider/demo1/
-2. http://einverne.github.io/ImageSlider/demo2/
-3. http://einverne.github.io/ImageSlider/demo3/
