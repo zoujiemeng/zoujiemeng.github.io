@@ -28,15 +28,17 @@ void mexFunction(int nlhs,mxArray* plhs[],int nrhs, const mxArray* prhs[])
 	if(nrhs != 2) mexErrMsgTxt("2 inputs required");
 }
 ```
-3. 输入参数转化
+3. 输入参数转化：
 该函数输入参数为MATLAB矩阵，需转换为C/C++对应的变量类型
 + 获取标量：函数`mxGetScalar`，该函数返回标量，直接强制类型转换即可使用
 + 获取矩阵：函数`mxGetData`，该函数返回void指针，之后按变量类型转换即可
 + 获取字符串
-      char *input_buf;
-      input_buf = mxArrayToString(prhs[0]);//将第一个输入参数转换为c、c++字符串
+```C++
+char *input_buf;
+input_buf = mxArrayToString(prhs[0]);//将第一个输入参数转换为c、c++字符串
+```
 + 获取结构体成员变量值：`mxGetField(prhs[0],0,"变量名称")`
-4. 输出参数转化
+4. 输出参数转化：
 在mexFunction中需将C/C++的变量转换为MATLAB的矩阵变量，这样MATLAB才能获得变量的值。
 + 申明指针`int * pDataOut;`
 + 创建矩阵`plhs[0] = mxCreateNumericMatrix(nDataLen,1, mxINT32_CLASS, mxREAL);`
@@ -60,10 +62,11 @@ void mexFunction(int nlhs,mxArray* plhs[],int nrhs, const mxArray* prhs[])
   > libmex.lib
 
 4. Source Files->Add->New Item新建模块定义文件(ProjectName).def，并添加如下内容
-> LIBRARY;"(ProjectName)"
-> EXPORTS mexFunction
-
-然后打开项目属性对话框，在Linker-Input-Module Definition File添加：(ProjectName).def
+```
+LIBRARY;"(ProjectName)"
+EXPORTS mexFunction
+```
+5. 打开项目属性对话框，在Linker-Input-Module Definition File添加：(ProjectName).def
 5. 编译生成。查看目标输出目录是否有(ProjectName).mexw64文件（32位系统同理）
 6. 将matlab的current folder 设置成mexw64文件所在的路径,或者移动生成的mexw64文件到MATLAB的current folder。
 7. VS中选择调试->附加到进程->MATLAB
