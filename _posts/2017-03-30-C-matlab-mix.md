@@ -7,6 +7,7 @@ category: mix
 tags: [C++,MATLAB,mexFunction]
 last_updated: 2017-03-30
 ---
+
 MATLAB可以通过mexFunction作为一个中转函数，来调用C/C++的代码。并且通过VS可以实现联合调试，对于算法的可视化分析来说非常方便。
 ## mexFunction函数的编写
 1. 包含头文件`#include "mex.h"`
