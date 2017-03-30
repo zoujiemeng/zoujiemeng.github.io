@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "C/C++与MATLAB的混合编程"
-tagline: "C++"
+tagline: ""
 description: "C/C++与MATLAB的混合编程"
 category: mix
 tags: [C++,MATLAB,mexFunction]
