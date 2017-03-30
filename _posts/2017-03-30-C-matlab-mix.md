@@ -11,6 +11,7 @@ last_updated: 2017-03-30
 MATLAB可以通过mexFunction作为一个中转函数，来调用C/C++的代码。并且通过VS可以实现联合调试，对于算法的可视化分析来说非常方便。
 
 ## mexFunction函数的编写
+
 1. 包含头文件`#include "mex.h"`
 2. 函数申明（该函数申明的名称，变量类型，变量名称都不可更改）
 ```C++
@@ -48,6 +49,7 @@ input_buf = mxArrayToString(prhs[0]);//将第一个输入参数转换为c、c++�
 + 修改指针的值即可（PS：接收指针无需申请内存空间，mxCreateNumericMatrix函数已申请）
 
 ## MATLAB与Visual Studio的联合调试
+
 1. 新建空项目
 2. 添加相关源文件，并在(ProjectName).c/cpp文件中编写MEX函数。
 3. 打开项目属性页
