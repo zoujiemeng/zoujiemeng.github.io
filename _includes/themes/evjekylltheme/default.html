@@ -2,7 +2,7 @@
 <html itemscope itemtype="http://schema.org/Blog">
   <head>
     <meta charset="utf-8">
-
+    
 		<title>{% if page.url == "/index.html" %} {{ site.title }} {% else %} {% if page.title %}{{ page.title }}{% endif %} | {{ site.title }} {% endif %}</title>
     {% if page.description %}<meta name="description" content="{{ page.description }}">
     <meta itemprop="description" content="{{ page.description }}">{% endif %}
