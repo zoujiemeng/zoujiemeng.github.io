@@ -29,7 +29,7 @@ last_updated: 2017-04-07
 
 + Mallat算法的分解公式：$$A_{j+1}(n) = \sum_k H(k)A_j(2n - k), D_{j+1}(n) = \sum_k G(k)A_j(2n - k)$$
   + 从信号处理的角度来看，Mallat算法实际上是将小波分解等效为在各个尺度上两个滤波器的组合输出结果
-  + MATLAB的`wfilters`函数可以获得滤波器组的系数。例如`[Lo_D,Hi_D,Lo_R,Hi_R] = wfilters('db1')`就可以得到haar小波的滤波器组系数，其中`Lo`代表低通滤波器，即`G(k)`；`Hi`代表高通滤波器，即`H(k)`；`_D`代表分解系数；`_R`代表重构系数。
+  + MATLAB的`wfilters`函数可以获得滤波器组的系数。例如`[Lo_D,Hi_D,Lo_R,Hi_R] = wfilters('db1')`就可以得到haar小波的滤波器组系数，其中`Lo`代表低通滤波器，即`H(k)`；`Hi`代表高通滤波器，即`G(k)`；`_D`代表分解系数；`_R`代表重构系数。
   + 由于实际的输入信号是有限的，因而必然会面临边界问题。零延拓是最简单的解决方法，但其也是效果最差的一个。周期延拓能保证重建的精度，但是会造成信号边缘小波系数过大。一般广泛采用的延拓方法为对称延拓。
   + 对称延拓的经典实现公式：$$f^`(n) = \left\{\begin{matrix} f(-n-1) & -(filterLen - 1) \le n < 0\\ f(n) & 0 \le n \le sLen - 1\\ f(2sLen - n - 1) & Len - 1 < n \le sLen + filterLen -2 \end{matrix}\right.$$
   
