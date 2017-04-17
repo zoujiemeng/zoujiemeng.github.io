@@ -5,7 +5,7 @@ tagline: ""
 description: "小波分析学习笔记"
 category: wavelet
 tags: [wavelet,tips]
-last_updated: 2017-04-07
+last_updated: 2017-04-13
 ---
 
 小波分析是分析非平稳信号的强大工具，其数学理论比较艰深复杂。除去各类的公式推导，小波分析还有一些容易被忽略的小细节，特此记录下来，仅供参考。
@@ -18,12 +18,13 @@ last_updated: 2017-04-07
 
 + 对于快速傅里叶变换(FFT)，其算法复杂度为O(N*logN)；对于优化后的小波变换，其算法复杂度为O(N)，比FFT更快。
 
-+ 若记母小波(mother wavelet)为$$\psi(x)$$，则小波基的集合可用$$\{\psi _{jk}, j \in Z, k \in Z\}$$来表示，或者，也可以用$$\{\phi _{j_0,k}, \psi _{jk}, j \ge j_0, k \in Z\}$$表示，其中$$\phi _00$$就被成为scaling function。
++ 若记母小波(mother wavelet)为$$\psi(x)$$，则小波基的集合可用$$\{\psi _{jk}, j \in Z, k \in Z\}$$来表示，或者，也可以用$$\{\phi _{j_0,k}, \psi _{jk}, j \ge j_0, k \in Z\}$$表示，其中$$\phi _{00}$$就被称为scaling function。
 
   + 注意两个集合的定义域区别
   + 两者之所以具有相互替代性是因为集合$$\{\phi _{j_0,k}, k \in Z\}$$拥有与集合$$\{ \psi _{jk}, j < j_0, k \in Z\}$$相同的子空间
   + 实际使用小波变换的时候都用后一种集合（即包含scaling function的集合）作为小波基来分解，主要是因为使用前一种集合分解后的系数项太多
-  + 实际信号的简单小波分解（haar小波）可利用矩阵计算的方法求得，其示例可参考文献[WAVELETS FOR KIDS]({{site.url}}/assets/WAVELETS_FOR_KIDS.pdf)
+  + 实际信号的简单小波分解（例如haar小波）可利用矩阵计算的方法求得，其示例可参考文献[WAVELETS FOR KIDS]({{site.url}}/assets/WAVELETS_FOR_KIDS.pdf)
+  
   
 + 对于大量信号的小波分解，矩阵计算的方法会使得计算量巨大，难以实际应用到工程中。为了解决此问题，Mallat提出了Mallat算法，该算法是工程应用中实现小波分解的经典算法。
 
@@ -32,6 +33,7 @@ last_updated: 2017-04-07
   + MATLAB的`wfilters`函数可以获得滤波器组的系数。例如`[Lo_D,Hi_D,Lo_R,Hi_R] = wfilters('db1')`就可以得到haar小波的滤波器组系数，其中`Lo`代表低通滤波器，即`H(k)`；`Hi`代表高通滤波器，即`G(k)`；`_D`代表分解系数；`_R`代表重构系数。
   + 由于实际的输入信号是有限的，因而必然会面临边界问题。零延拓是最简单的解决方法，但其也是效果最差的一个。周期延拓能保证重建的精度，但是会造成信号边缘小波系数过大。一般广泛采用的延拓方法为对称延拓。
   + 对称延拓的经典实现公式：$$f^`(n) = \left\{\begin{matrix} f(-n-1) & -(filterLen - 1) \le n < 0\\ f(n) & 0 \le n \le sLen - 1\\ f(2sLen - n - 1) & Len - 1 < n \le sLen + filterLen -2 \end{matrix}\right.$$
+  
   
 + Mallat算法的重构公式：$$A_j(n) = \sum_k h(n - 2k)A_{j+1}(k) + \sum_k g(n - 2k)D_{j+1}(k)$$
 
