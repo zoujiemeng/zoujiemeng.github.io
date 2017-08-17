@@ -5,7 +5,7 @@ tagline: ""
 description: "C/C++与MATLAB的混合编程"
 category: mix
 tags: [C++,MATLAB,mexFunction]
-last_updated: 2017-03-30
+last_updated: 2017-08-17
 ---
 
 MATLAB可以通过mexFunction作为一个中转函数，来调用C/C++的代码。并且通过VS可以实现联合调试，对于算法的可视化分析来说非常方便。
@@ -32,7 +32,7 @@ void mexFunction(int nlhs,mxArray* plhs[],int nrhs, const mxArray* prhs[])
 }
 ```
 3. 输入参数转化：
-该函数输入参数为MATLAB矩阵，需转换为C/C++对应的变量类型
+  该函数输入参数为MATLAB矩阵，需转换为C/C++对应的变量类型
 + 获取标量：函数`mxGetScalar`，该函数返回标量，直接强制类型转换即可使用
 + 获取矩阵：函数`mxGetData`，该函数返回void指针，之后按变量类型转换即可
 + 获取字符串
@@ -42,11 +42,11 @@ input_buf = mxArrayToString(prhs[0]);//将第一个输入参数转换为c、c++�
 ```
 + 获取结构体成员变量值：`mxGetField(prhs[0],0,"变量名称")`
 4. 输出参数转化：
-在mexFunction中需将C/C++的变量转换为MATLAB的矩阵变量，这样MATLAB才能获得变量的值。
+  在mexFunction中需将C/C++的变量转换为MATLAB的矩阵变量，这样MATLAB才能获得变量的值。
 + 申明指针`int * pDataOut;`
 + 创建矩阵`plhs[0] = mxCreateNumericMatrix(nDataLen,1, mxINT32_CLASS, mxREAL);`
 + 关联指针`pDataOut = (int *)mxGetData(plhs[0]);`
-+ 修改指针的值即可（PS：接收指针无需申请内存空间，mxCreateNumericMatrix函数已申请）
++ 使用memcpy函数或者逐一赋值的方式修改指针对应内存的值即可（PS：接收指针无需申请内存空间，mxCreateNumericMatrix函数已申请）
 
 ## MATLAB与Visual Studio的联合调试
 
@@ -60,10 +60,7 @@ input_buf = mxArrayToString(prhs[0]);//将第一个输入参数转换为c、c++�
   + 链接器->输出文件改为$(OutDir)$(TargetName)$(TargetExt)
   + 链接器->附加库目录添加MATLAB安装目录下的\extern\lib\win64\microsoft路径（32位按对应环境更改）
   + 链接器->输入->附加依赖项添加下列四个库文件
-  > libmx.lib
-  > libeng.lib
-  > libmat.lib
-  > libmex.lib
+  > libmx.lib;libeng.lib;libmat.lib;libmex.lib
 
 4. Source Files->Add->New Item新建模块定义文件(ProjectName).def，并添加如下内容
 ```
@@ -71,10 +68,10 @@ LIBRARY;"(ProjectName)"
 EXPORTS mexFunction
 ```
 5. 打开项目属性对话框，在Linker-Input-Module Definition File添加：(ProjectName).def
-5. 编译生成。查看目标输出目录是否有(ProjectName).mexw64文件（32位系统同理）
-6. 将matlab的current folder 设置成mexw64文件所在的路径,或者移动生成的mexw64文件到MATLAB的current folder。
-7. VS中选择调试->附加到进程->MATLAB
-8. 断点调试即可
-（ps：每次修改MexFunction所在的.c文件后，重新编译生成解决方案前都需要先在matlab工程下clear一下，即`clear (ProjectName).mexw64`）
+6. 编译生成。查看目标输出目录是否有(ProjectName).mexw64文件（32位系统同理）
+7. 将matlab的current folder 设置成mexw64文件所在的路径,或者移动生成的mexw64文件到MATLAB的current folder。
+8. VS中选择调试->附加到进程->MATLAB
+9. 断点调试即可
+  （ps：每次修改MexFunction所在的.c文件后，重新编译生成解决方案前都需要先在matlab工程下clear一下，即`clear (ProjectName).mexw64`）
 
 
