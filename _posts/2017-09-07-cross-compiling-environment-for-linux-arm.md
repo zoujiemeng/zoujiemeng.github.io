@@ -52,22 +52,22 @@ last_updated: 2017-09-14
   + 安装过程中出现需手动确认的情况确认即可
 
 + 以上步骤都完成之后就可用arm-fsl-linux-gnueabi-gcc编译器进行编译了，根据[对应的代码]({{site.url}}/assets/other/0908.zip)，makefile文件可如下方式写成（将CC值改成gcc可在Linux里面运行验证）
+
 ```
 CC = arm-fsl-linux-gnueabi-gcc
-
 bk_alg_test_0906 : main.o BK_wbc_main.o impedance.o pulse_identify.o
-	$(CC) -o bk_alg_test_0906 main.o BK_wbc_main.o impedance.o \
-	       pulse_identify.o -lm
+$(CC) -o bk_alg_test_0906 main.o BK_wbc_main.o impedance.o \
+       pulse_identify.o -lm
 main.o : main.c pulse_identify.h impedance.h alg.h BK_wbc_main.h
-	$(CC) -c main.c
+$(CC) -c main.c
 BK_wbc_main.o : BK_wbc_main.c impedance.h BK_wbc_main.h
-	$(CC) -c BK_wbc_main.c
+$(CC) -c BK_wbc_main.c
 impedance.o : impedance.c datatype.h impedance.h alg.h p2o_def.h
-	$(CC) -c impedance.c
+$(CC) -c impedance.c
 pulse_identify.o : pulse_identify.c datatype.h pulse_identify.h p2o_def.h
-	$(CC) -c pulse_identify.c
-clean :	
-	rm bk_alg_test_0906 main.o BK_wbc_main.o impedance.o pulse_identify.o
+$(CC) -c pulse_identify.c
+clean :
+rm bk_alg_test_0906 main.o BK_wbc_main.o impedance.o pulse_identify.o
 ```
 
 
