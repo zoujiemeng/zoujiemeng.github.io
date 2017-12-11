@@ -5,7 +5,7 @@ tagline: ""
 description: "排序类算法的重点串联"
 category: algorithm
 tags: [C,sorting,algorithm]
-last_updated: 2017-09-14
+last_updated: 2017-12-04
 ---
 
 排序算法是经典算法的重要分支之一，里面包含和诸多计算机算法实现的经典思想。基于比较的排序算法中的三种（归并排序、快速排序、堆排序）更是被列入了支配世界的10个算法之一。下面按照个人认为的理解难易程度以及使用到的思想分类逐一介绍（由易到难）。
@@ -87,7 +87,7 @@ int select_sort(ELETYPE *pArray,int ArraySize)
 插入排序是减治法的典型应用，就是先解决最初始的问题，然后逐步递推。在已经解决N-i问题的前提下（即前面N-i个元素已经排序完成），将第i个元素插入前面已排序序列的适当位置。具体代码实现如下：
 ```C++
 //===插入排序===
-int insertion_sort2(ELETYPE *pArray, int ArraySize)
+int insertion_sort(ELETYPE *pArray, int ArraySize)
 {
 	int i,j;
 	ELETYPE temp;
@@ -199,9 +199,64 @@ void merge_sort(ELETYPE A[], int ArraySize)
 快速排序也是分治法的典型应用，和归并排序不同的是，归并排序按照元素位置进行划分，而快速排序是按元素的值进行划分。这个值称为枢纽元，快速排序在选定枢纽元后，对给定数组的元素进行划分，使得枢纽元左边的元素都小于枢纽元，右边的元素都大于枢纽元。随后递归处理即可。快速排序的核心问题在于枢纽元的选取，最简单的方法是选取子数组的第一个元素。这也是实践中证明非常糟糕的一种选法。更好的策略是在子数组中随机选取，然而如果待排序数组规模极大的话，随机数的开销也会变得很大。当然，理想的状态是每次取到子数组的中值，然而这又是一笔开销。于是，目前一种广泛使用的策略是选取子数组左端、右端和中间三个元素的中值作为枢纽元。这种选取枢纽元的方法称为三数中值分割法，实践证明，该方法减少了快速排序大约5%的平均时间。具体的代码如下。
 ```C++
 //===快速排序===
+void swap(ELETYPE *a, ELETYPE *b)
+{
+	ELETYPE tmp;
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+ELETYPE choose_pivot_using_median3(ELETYPE A[], int left, int right)
+{
+	int center = (left + right) / 2;
+	if (A[left] > A[center])
+		swap(&A[left], &A[center]);
+	if (A[left] > A[right])
+		swap(&A[left], &A[right]);
+	if (A[center] > A[right])
+		swap(&A[center], &A[right]);
 
+	swap(&A[center], &A[right - 1]);
+	return A[right - 1];
+
+}
+
+#define CUTOFF (3)
+
+void q_sort(ELETYPE A[], int left, int right)
+{
+	int i, j;
+	ELETYPE pivot;
+
+	if (left + CUTOFF <= right)
+	{
+		pivot = choose_pivot_using_median3(A, left, right);
+		i = left;
+		j = right - 1;
+		for (;;)
+		{
+			while (A[++i] < pivot) {}
+			while (A[--j] > pivot) {}
+			if (i < j)
+				swap(&A[i], &A[j]);
+			else
+				break;
+		}
+		swap(&A[i], &A[right - 1]);
+		q_sort(A, left, i - 1);
+		q_sort(A, i + 1, right);
+	}
+	else
+		insertion_sort(A + left, right - left + 1); //子数组元素小于CUTOFF值时改用插入排序
+
+}
+
+void quick_sort(ELETYPE A[], int ArraySize) 
+{
+	q_sort(A, 0, ArraySize - 1);
+}
 ```
-快速排序是目前已知的平均运行时间最短的基于比较的排序方式，然而它也有自己的缺点：不稳定。另外，在快速排序中，当子数组足够小时（<20），若改用插入排序，即可节省多余的递归调用，优化运行时间。
+代码中需要特别注意的是在选取pivot的时候将pivot移到了倒数第二的位置，这是为了后续比较的方便以及防止游标越界。子数组分好后需再将pivot移回正确的位置，在例程中就是游标i的位置。快速排序是目前已知的平均运行时间最短的基于比较的排序方式，然而它也有自己的缺点：不稳定。另外，在快速排序中，当子数组足够小时（<20），若改用插入排序，即可节省多余的递归调用，优化运行时间。
 
 ## 变治法
 变治法的核心思想是先“变”在“治”，“变”一定是为了将原来的问题转化成一个更简单的问题，而“治”就是对转化后的问题进行求解。事实上，在实际工程问题的解决中经常用到这一类的方法，只是没有意识到而已。
