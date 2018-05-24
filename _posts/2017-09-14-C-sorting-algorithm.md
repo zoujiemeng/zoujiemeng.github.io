@@ -28,9 +28,9 @@ int bubble_sort(ELETYPE *pArray,int ArraySize)
 		
 	for (i = 1; i < ArraySize ; i++)
 	{
-		for (j = 0; j < ArraySize - i ; j++)
+		exchange = FALSE;//===交换标记===
+        for (j = 0; j < ArraySize - i ; j++)
 		{
-			exchange = FALSE;//===交换标记===
 			if (pArray[j] > pArray[j+1])
 			{
 				temp = pArray[j+1];
