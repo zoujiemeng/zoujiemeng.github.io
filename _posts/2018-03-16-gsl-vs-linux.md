@@ -21,9 +21,9 @@ GSL(GNU Scientific Library)是用C语言写成的科学计算库，与1996年发
 
 ## 使用Cmake生成VS的工程项目文件
 + 打开Cmake-gui，选择源代码路径以及工程文件存储路径，如下图所示
-![Cmake-gui]({{site.url}}/assets/images/20130316-1.png)
+![Cmake-gui]({{site.url}}/assets/images/20180316-1.png)
 + 点击configure按钮，选择对应版本的编译器（注意：VS2015的版本号是14,64位系统请选择带win64字样的选项）
-![Cmake-gui-configure]({{site.url}}/assets/images/20130316-2.png)
+![Cmake-gui-configure]({{site.url}}/assets/images/20180316-2.png)
 + configure完成后点击generate生成对应工程文件，最后点击open project即可在对应IDE中打开。
 
 ## 使用VS生成库文件
@@ -49,7 +49,7 @@ int main(void)
 + 打开项目属性对话框，在**VC++目录->包含目录**中添加gsl源码的解压文件夹路径，在**VC++目录->库目录**中添加之前生成库文件的路径。在**链接器->输入->附加依赖项**中添加**gsl.lib;gslcblas.lib**
 + 编译项目（编译信息若提示默认库“LIBCMT”与其他库的使用冲突，只需在**项目属性->链接器->命令行**下方的输入栏中输入`/NODEFAULTLIB:"libcmt.lib" `即可）。
 + 运行项目，若显示下图结果，则代表gsl安装成功（可将上述系列设置单独存在一个设置文件中，方便移植到其他项目使用）。
-![gsl_test_result]({{site.url}}/assets/images/20130316-3.png)
+![gsl_test_result]({{site.url}}/assets/images/20180316-3.png)
 
 # GSL on Linux
 本文以Ubuntu 14.04为例演示gsl在linux系统中的安装与使用，由于是从源码安装，理论上该步骤兼容所有支持gcc的linux发行版系统。

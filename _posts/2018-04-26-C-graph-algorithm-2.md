@@ -19,9 +19,7 @@ DFS的实现思路如下：
 + 循环体：如果当前顶点i未被访问，则将该顶点i传入递归函数DFS
 + 递归函数：访问所有与i邻接的顶点，若其没有被访问，则继续递归调用，若其以及被访问，这访问下一个与i邻接的顶点。根据各顶点被访问的先后顺序可以构建出深度优先查找森林。具体代码实现如下
 ```C++
-/*
- * 深度优先搜索遍历图的递归实现
- */
+// 深度优先搜索遍历图的递归实现
 static void DFS(LGraph G, int i, int *visited)
 {
     ENode *node;
@@ -37,9 +35,7 @@ static void DFS(LGraph G, int i, int *visited)
     }
 }
 
-/*
- * 深度优先搜索遍历图
- */
+// 深度优先搜索遍历图
 void DFSTraverse(LGraph G)
 {
     int i;
@@ -97,9 +93,7 @@ bool judge_connectivity_using_DFS(LGraph G)
 + 队列处理，当队列不为空（即head！=rear）时，将队头的顶点j出队，同时边结构体指向j的第一条边，随后顶点j邻接的顶点全部入队，visit置为1，再一一走出队流程
 + 外层循环结束，算法结束
 ```C++
-/*
- * 广度优先搜索（类似于树的层次遍历）
- */
+// 广度优先搜索（类似于树的层次遍历）
 void BFS(LGraph G)
 {
     int head = 0;
