@@ -140,5 +140,10 @@ vscode对Python的支持比较全面，基本上官方的插件就能满足一�
 vscode自身不带有Python的解释器，你可以按照需求安装对应版本的Python解释器，在[官方网站](https://www.python.org/downloads/)就能下载各个不同版本的解释器。
 
 ### 编译并运行代码
-新建一个Python文件，例如`hello.py`，写一段简单的代码，比如`print("Hello World")`,左下方就能看见目前使用的Python解释器版本，如果系统里面安装了多个Python版本的话可以在此处进行自定义。此时右下角可能弹出`未安装pylint之类的信息`,点击安装即可（安装过程中若提示`UnicodeDecodeError: 'utf-8' codec can't decode byte 0xd7 in position 48: invalid continuation byte`错误，则只需把问题文件问题位置中的`return s.decode('utf_8')` 改为 `return s.decode('gbk')`即可，这是因为windows中文系统的编码问题）。
+新建一个Python文件，例如`hello.py`，写一段简单的代码，比如`print("Hello World")`,左下方就能看见目前使用的Python解释器版本，如果系统里面安装了多个Python版本的话可以在此处进行自定义。此时右下角可能弹出`未安装pylint之类的信息`,点击安装即可（安装过程中若提示`UnicodeDecodeError: 'utf-8' codec can't decode byte 0xd7 in position 48: invalid continuation byte`错误，则只需把问题文件问题位置中的`return s.decode('utf_8')` 改为 `return s.decode('gbk')`即可，这是因为windows中文系统的编码问题）。另外，同样的问题可能出现在pip安装第三方时，此时需要修改python安装目录 `Python27\Lib\`目录下的`mimetypes.py`文件,在import行结束后添加如下代码
+```python
+if sys.getdefaultencoding() != 'gbk':   
+ reload(sys)   
+ sys.setdefaultencoding('gbk')  
+```
 直接F5就能运行或者打断点调试，非常方便。
